@@ -31,7 +31,7 @@ const addToFavorite = async (item) => {
   try {
     if (!item.isFavorite) {
       const obj = {
-        parentId: item.id,
+        item_id: item.id,
       };
       item.isFavorite = true;
       const { data } = await axios.post(
@@ -57,7 +57,7 @@ const fetchFavorites = async () => {
     );
     items.value = items.value.map((item) => {
       const favorite = favorites.find(
-        (favorite) => favorite.parentId === item.id
+        (favorite) => favorite.item_id === item.id
       );
 
       if (!favorite) {
@@ -69,7 +69,6 @@ const fetchFavorites = async () => {
         favoriteId: favorite.id,
       };
     });
-    console.log(items.value);
   } catch (error) {
     console.log(error);
   }
@@ -121,9 +120,9 @@ watch(filters, fetchItems);
 </script>
 
 <template>
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between items-center mt-[100px] flex-wrap">
     <h2 class="text-3xl font-bold mb-8">Vse KRosovki</h2>
-    <div class="flex gap-4">
+    <div class="flex gap-4 flex-wrap">
       <select
         @change="onChangeSelect"
         class="py-2 px-3 border outline-none rounded-md"
